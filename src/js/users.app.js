@@ -1,4 +1,5 @@
 var usersApp = (function() {
+
   function viewUsers(){
 
     let uri = `${window.location.origin}/api/users`;
@@ -160,56 +161,57 @@ var usersApp = (function() {
     xhr.onload = function(){
       let app = document.getElementById('app');
       let data = JSON.parse(xhr.response);
+
       var form =  `
-    <div class="card">
-      <div class="card-header clearfix">
-        <h2 class="h3 float-left">Edit</h2>
-        <div class="float-right">
-          <a href="#" class="btn btn-primary">Cancel</a>
+        <div class="card">
+          <div class="card-header clearfix">
+            <h2 class="h3 float-left">Edit</h2>
+            <div class="float-right">
+              <a href="#" class="btn btn-primary">Cancel</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="editUser" class="card-body">
+              <input type="hidden" id="_id" name="_id" value="${data.user._id}">
+              <div id="formMsg" class="alert alert-danger text-center">Your form has errors</div>
+
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="first_name">First Name</label>
+                  <input type="text" id="first_name" name="first_name" class="form-control" value="${data.user.first_name}" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" id="last_name" name="last_name" class="form-control" value="${data.user.last_name}" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" class="form-control" value="${data.user.username}" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" class="form-control" value="${data.user.email}" required>
+                </div>
+              </div>
+
+              <div class="text-right">
+                <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm-block">
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-      <div class="card-body">
-        <form id="editUser" class="card-body">
-          <input type="hidden" id="_id" name="_id" value="${data.user._id}">
-          <div id="formMsg" class="alert alert-danger text-center">Your form has errors</div>
+        <div>
+          <a href="#delete-${data.user._id}" class="text-danger">Delete</a>
+        </div>
+      `;
 
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="first_name">First Name</label>
-              <input type="text" id="first_name" name="first_name" class="form-control" value="${data.user.first_name}" required>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="last_name">Last Name</label>
-              <input type="text" id="last_name" name="last_name" class="form-control" value="${data.user.last_name}" required>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="username">Username</label>
-              <input type="text" id="username" name="username" class="form-control" value="${data.user.username}" required>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" class="form-control" value="${data.user.email}" required>
-            </div>
-          </div>
-
-          <div class="text-right">
-            <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm-block">
-          </div>
-        </form>
-      </div>
-    </div>
-    <div>
-      <a href="#delete-${data.user._id}" class="text-danger">Delete</a>
-    </div>
-  `;
-
-  app.innerHTML=form;
-  processRequest('editUser', '/api/users', 'PUT');
+      app.innerHTML=form;
+      processRequest('editUser', '/api/users', 'PUT');
     }
   }
 
@@ -221,7 +223,7 @@ var usersApp = (function() {
       let formData = new FormData(form);
       let uri = `${window.location.origin}${url}`;
       let xhr = new XMLHttpRequest();
-      xhr.open('method', uri);
+      xhr.open(method, uri);
 
       xhr.setRequestHeader(
         'Content-Type',
@@ -237,13 +239,14 @@ var usersApp = (function() {
       xhr.onload = function(){
         let data = JSON.parse(xhr.response);
         if(data.success===true){
-          window.location.href = '/';
+          window.location.hash = `#view-${data.user._id}`
         }else{
           document.getElementById('formMsg').style.display='block';
         }
       }
     });
   }
+
   function deleteView(id){
 
     let uri = `${window.location.origin}/api/users/${id}`;
@@ -278,8 +281,6 @@ var usersApp = (function() {
           <div class="text-center">
             <br>
             <a onclick="usersApp.deleteUser('${data.user._id}');" class="btn btn-lg btn-danger text-white">
-            Yes delete ${data.user.username}
-          </a>
               Yes delete ${data.user.username}
             </a>
           </div>
@@ -290,6 +291,7 @@ var usersApp = (function() {
       app.innerHTML = card;
     }
   }
+
   function deleteUser(id){
 
     let uri = `${window.location.origin}/api/users/${id}`;
@@ -314,6 +316,7 @@ var usersApp = (function() {
     }
 
   }
+
   return {
     load: function(){
       let hash = window.location.hash;
@@ -348,10 +351,10 @@ var usersApp = (function() {
     }
 
   }
-
 })();
 
 usersApp.load();
+
 window.addEventListener("hashchange", function(){
   usersApp.load();
 });
