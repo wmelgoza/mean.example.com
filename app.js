@@ -9,11 +9,14 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var Users = require('./models/users');
+var Articles = require('./models/articles');
 
 var authRouter = require('./routes/auth');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var articlesRouter = require('./routes/articles');
 var apiUsersRouter = require('./routes/api/users');
+var apiArticlesRouter = require('./routes/api/articles');
 var apiAuthRouter = require('./routes/api/auth');
 
 var app = express();
@@ -127,6 +130,7 @@ app.use('/api/users', apiUsersRouter);
 app.use('/api/auth', apiAuthRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/article', articlesRouter);
 app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler

@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:userId', function(req,res){
-  
+
   var userId = req.params.userId;
    Users.findOne({'_id':userId}, function(err, user){
      if(err){
@@ -29,30 +29,30 @@ router.get('/:userId', function(req,res){
     first_name: req.body.first_name,
     last_name: req.body.last_name
   }), function(err, user){
-    
+
     if(err){
       return res.json({success: false, user: req.body, error: err});
     }
 
     return res.json({success: true, user: user});
-    
+
   });
 });
 
 router.put('/', function(req, res){
 
-  Users.findOne({'_id': req.body._id}, function(err, user){
+  Articles.findOne({'_id': req.body._id}, function(err, articles){
 
    if(err) {
      return res.json({success: false, error: err});
    }
 
-   if(user) {
+   if(articles) {
 
     let data = req.body;
 
-    if(data.username){
-      user.username = data.username;
+    if(data.articlesname){
+      articles.articlesname = data.articlesname;
     };
 
     if(data.email){
@@ -78,7 +78,7 @@ router.put('/', function(req, res){
    }
 
   });
-  
+
 });
 
 router.delete('/:userId', function(req,res){

@@ -24,14 +24,14 @@ var Users = new Schema({
   hash: {
     type: String,
     required: [
-      true,   
+      true,
       'There was a problem creating your password'
     ]
   },
   salt: {
     type: String,
     required: [
-      true, 
+      true,
       'There was a problem creating your password'
     ]
   },
