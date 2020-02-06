@@ -25,9 +25,10 @@ var articlesApp = (function() {
       for (let i=0; i<articles.length; i++) {
         rows = rows + `<tr>
           <td>
-            <a href="#view-${articles[i]['_id']}">${articles[i]['description']}, ${articles[i]['keywords']}</a>
+            <a href="#view-${articles[i]['_id']}">${articles[i]['title']}, ${articles[i]['keywords']}</a>
           </td>
-          <td>${articles[i]['title']}</td>
+          <td>${articles[i]['description']}</td>
+          <td>${articles[i]['body']}</td>
           <td>${articles[i]['published']}</td>
         </tr>`;
       }
@@ -36,7 +37,7 @@ var articlesApp = (function() {
       //table
       table = `<div class="card">
         <div class="card-header clearfix">
-          <h2 class="h3 float-left">articles</h2>
+          <h2 class="h3 float-left">Articles</h2>
           <div class="float-right">
             <a href="#create" class="btn btn-primary">New article</a>
           </div>
@@ -45,8 +46,9 @@ var articlesApp = (function() {
           <table class="table table-striped table-hover table-bordered">
             <thead>
               <tr>
-                <td>Name</td>
                 <td>title</td>
+                <td>description</td>
+                <td>body</td>
                 <td>published</td>
               </tr>
             </thead>
@@ -66,7 +68,7 @@ var articlesApp = (function() {
     var form =  `
         <div class="card">
           <div class="card-header clearfix">
-            <h2 class="h3 float-left">Create a New article</h2>
+            <h2 class="h3 float-left">Create a New Article</h2>
             <div class="float-right">
               <a href="#" class="btn btn-primary">Cancel</a>
             </div>
@@ -77,20 +79,26 @@ var articlesApp = (function() {
 
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="keywords">First Name</label>
-                  <input type="text" id="keywords" name="keywords" class="form-control" required>
+                  <label for="title">Title</label>
+                  <input type="text" id="title" name="title" class="form-control" required>
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="description">Last Name</label>
+                  <label for="description">Description</label>
                   <input type="text" id="description" name="description" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                  <label for="keywords">Keywords</label>
+                  <input type="text" id="keywords" name="keywords" class="form-control" required>
                 </div>
               </div>
 
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="title">title</label>
-                  <input type="text" id="title" name="title" class="form-control" required>
+                  <label for="body">Body</label>
+                  <input type="text" id="body" name="body" class="form-control" required>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -130,13 +138,14 @@ var articlesApp = (function() {
 
       card = `<div class="card">
         <div class="card-header clearfix">
-          <h2 class="h3 float-left">${data.article.keywords} ${data.article.description}</h2>
+          <h2 class="h3 float-left">${data.article.title} ${data.article.keywords}</h2>
           <div class="float-right">
             <a href="#edit-${data.article._id}" class="btn btn-primary">Edit</a>
           </div>
         </div>
         <div class="card-body">
-          <div>${data.article.title}</div>
+          <div>${data.article.body}</div>
+          <div>${data.article.description}</div>
           <div>${data.article.published}</div>
         </div>
       </div>`;
