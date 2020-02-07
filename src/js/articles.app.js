@@ -283,7 +283,7 @@ var articlesApp = (function() {
 
       card = `<div class="card bg-transparent border-danger text-danger bg-danger">
         <div class="card-header bg-transparent border-danger">
-          <h2 class="h3 text-center">Your About to Delete a article</h2>
+          <h2 class="h3 text-center">Your About to Delete an Article</h2>
         </div>
         <div class="card-body text-center">
           <div>
