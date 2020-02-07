@@ -186,24 +186,31 @@ var articlesApp = (function() {
 
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="keywords">First Name</label>
-                  <input type="text" id="keywords" name="keywords" class="form-control" value="${data.article.keywords}" required>
+                  <label for="title">title</label>
+                  <input type="text" id="title" name="title" class="form-control" value="${data.article.title}" required>
                 </div>
 
+
                 <div class="form-group col-md-6">
-                  <label for="description">Last Name</label>
+                  <label for="description">Description</label>
                   <input type="text" id="description" name="description" class="form-control" value="${data.article.description}" required>
                 </div>
               </div>
 
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="title">title</label>
-                  <input type="text" id="title" name="title" class="form-control" value="${data.article.title}" required>
+                  <label for="keywords">Keywords</label>
+                  <input type="text" id="keywords" name="keywords" class="form-control" value="${data.article.keywords}" required>
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="published">published</label>
+                  <label for="body">Body</label>
+                  <input type="body" id="body" name="body" class="form-control" value="${data.article.body}" required>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                  <label for="published">Published</label>
                   <input type="published" id="published" name="published" class="form-control" value="${data.article.published}" required>
                 </div>
               </div>
