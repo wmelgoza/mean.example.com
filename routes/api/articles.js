@@ -3,81 +3,85 @@ var router = express.Router();
 var articles = require('../../models/articles');
 
 router.get('/', function(req, res, next) {
+
   articles.find({},function(err, articles){
     if(err){
      return res.json({'success':false, 'error': err});
-   }
+    }
+
     return res.json({'success':true, 'articles': articles});
   });
+
 });
 
-router.get('/:articlesId', function(req,res){
+router.get('/:id', function(req,res){
 
-  var articlesId = req.params.articlesId;
-   articles.findOne({'_id':articlesId}, function(err, articles){
-     if(err){
+  var id = req.params.id;
+
+  articles.findOne({'_id':id}, function(err, article){
+    if(err){
       return res.json({'success':false, 'error': err});
     }
-     return res.json({'success':true, 'articles': article});
-   });
- });
 
- router.post('/', function(req, res) {
+    return res.json({'success':true, 'article': article});
+  });
+
+});
+
+router.post('/', function(req, res) {
   articles.create(new articles({
     title: req.body.title,
     description: req.body.description,
     keywords: req.body.keywords,
     body: req.body.body,
     published: req.body.published
-
   }), function(err, article){
 
     if(err){
-      return res.json({success: false, articles: req.body, error: err});
+      return res.json({success: false, article: req.body, error: err});
     }
 
-    return res.json({success: true, articles: article});
+    return res.json({success: true, article: article});
 
   });
 });
 
 router.put('/', function(req, res){
 
-  Articles.findOne({'_id': req.body._id}, function(err, articles){
+  articles.findOne({'_id': req.body._id}, function(err, article){
 
-   if(err) {
-     return res.json({success: false, error: err});
-   }
-
-   if(articles) {
+  if(err) {
+    return res.json({success: false, error: err});
+  }else if(article) {
 
     let data = req.body;
 
     if(data.title){
-      articles.title = data.title;
-    };
+    article.title = data.title;
+    }
 
     if(data.description){
-    articles.description = data.description;
-    };
+    article.description = data.description;
+    }
 
     if(data.keywords){
-    articles.keywords = data.keywords;
-    };
+    article.keywords = data.keywords;
+    }
 
     if(data.body){
-    articles.body = data.body;
-    };
+    article.body = data.body;
+    }
 
     if(data.published){
-   articles.published = data.published;
-      };
+      article.published = data.published;
+      article.offset = new Date(data.published).getTimezoneOffset();
+    }
 
-    articles.save(function(err){
+    article.save(function(err){
       if(err){
         return res.json({success: false, error: err});
       }else{
-        return res.json({success: true, articles:articles});
+        return res.json({success: true, article:article});
       }
     });
 
@@ -87,11 +91,11 @@ router.put('/', function(req, res){
 
 });
 
-router.delete('/:articlesId', function(req,res){
+router.delete('/:articleId', function(req,res){
 
-  var articlesId = req.params.articlesId;
+  var articleId = req.params.articleId;
 
-  articles.remove({'_id':articlesId}, function(err,removed){
+  articles.remove({'_id':articleId}, function(err,removed){
 
     if(err){
       return res.json({success: false, error: err});
@@ -102,4 +106,5 @@ router.delete('/:articlesId', function(req,res){
   });
 
 });
+
 module.exports = router;

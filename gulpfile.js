@@ -18,7 +18,9 @@ gulp.task('build-main-css', function(){
   . pipe(gulp.dest('public/dist/css'));
   return merge(main);
 });
+
 gulp.task('build-main-js', function() {
+
   var authApp = gulp.src([
     'src/js/main.js',
   ])
@@ -27,7 +29,9 @@ gulp.task('build-main-js', function() {
   .pipe(gulp.dest('public/dist/js'));
   return merge(authApp);
 });
+
 gulp.task('build-auth-js', function() {
+
   var authApp = gulp.src([
     'src/js/auth.app.js',
   ])
@@ -36,7 +40,9 @@ gulp.task('build-auth-js', function() {
   .pipe(gulp.dest('public/dist/js'));
   return merge(authApp);
 });
+
 gulp.task('build-users-js', function() {
+
   var userApp = gulp.src([
     'src/js/users.app.js',
   ])
@@ -45,7 +51,9 @@ gulp.task('build-users-js', function() {
   .pipe(gulp.dest('public/dist/js'));
   return merge(userApp);
 });
+
 gulp.task('build-articles-js', function() {
+
   var articlesApp = gulp.src([
     'src/js/articles.app.js',
   ])
@@ -54,6 +62,7 @@ gulp.task('build-articles-js', function() {
   .pipe(gulp.dest('public/dist/js'));
   return merge(articlesApp);
 });
+
 //Recompile SCSS/JS on save
 gulp.task('watch', function(){
   gulp.watch('./src/scss/**/*.scss', gulp.series('build-css'));
